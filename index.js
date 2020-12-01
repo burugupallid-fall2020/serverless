@@ -1,5 +1,4 @@
 const aws = require("aws-sdk");
-const { measureMemory } = require("vm");
 const dynamo = new aws.DynamoDB.DocumentClient();
 const ses = new aws.SES();
 aws.config.update({ region: "us-east-1" });
