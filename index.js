@@ -9,8 +9,7 @@ exports.handler = (event, context, callback) => {
   var searchParams = {
     TableName: "csye6225",
     Key: {
-      id: message.email + message.answer_id + message.question_id + message.type, 
-      answer_text: message.answer_text
+      id: message.email + message.answer_id + message.question_id + message.type + message.answer_text
     }
   };
   dynamo.get(searchParams, function (error, data1) {
@@ -18,16 +17,11 @@ exports.handler = (event, context, callback) => {
       console.log("Error to retreived Data from DynamoDB", error);
     } else {
       console.log("Successessfully retreived Data from DynamoDB", data1);
-      let checkDuplicate = false;
-      if (data1.Item == null || data1.Item == undefined) {
-        checkDuplicate = false;
-      }
-      if (!checkDuplicate) {
+      console.log(data1)
+      if (!data1.Item) {
         var params = {
           Item: {
-            id: message.email + message.answer_id + message.question_id + message.type, 
-            from: "noreply@prod.bdsaisantosh.me",
-            answer: message.answer_text
+            id: message.email + message.answer_id + message.question_id + message.type + message.answer_text
           },
           TableName: "csye6225"
         };
