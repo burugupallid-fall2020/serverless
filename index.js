@@ -1,4 +1,5 @@
 const aws = require("aws-sdk");
+const { measureMemory } = require("vm");
 const dynamo = new aws.DynamoDB.DocumentClient();
 const ses = new aws.SES();
 aws.config.update({ region: "us-east-1" });
@@ -9,7 +10,8 @@ exports.handler = (event, context, callback) => {
   var searchParams = {
     TableName: "csye6225",
     Key: {
-      id: message.email + message.answer_id + message.question_id
+      id: message.email + message.answer_id + message.question_id + message.type, 
+      answer_text: message.answer_text
     }
   };
   dynamo.get(searchParams, function (error, data1) {
@@ -24,7 +26,7 @@ exports.handler = (event, context, callback) => {
       if (!checkDuplicate) {
         var params = {
           Item: {
-            id: message.email + message.answer_id + message.question_id,
+            id: message.email + message.answer_id + message.question_id + message.type, 
             from: "noreply@prod.bdsaisantosh.me",
             answer: message.answer_text
           },
