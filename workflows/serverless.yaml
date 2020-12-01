@@ -1,0 +1,51 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [ main ]
+
+
+jobs:
+  build:
+
+ 
+
+    runs-on: ubuntu-latest
+
+ 
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+ 
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        npm install
+        sudo apt-get update && sudo apt-get install wget zip unzip -y
+        sudo apt-get install -y python3-pip
+        sudo pip3 install awscli
+    - name: Build Deployment Artifact
+      run: | 
+        mkdir codedeploy_artifact
+        zip -r lambda_artifact .
+        mv lambda_artifact.zip codedeploy_artifact
+        cd codedeploy_artifact
+    - name: Configure AWS credentials from Test account
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+        aws-region: us-east-1
+    - name: Push artifact to s3
+      run: |
+        aws s3 sync ./codedeploy_artifact s3://${{ secrets.S3_BUCKET_NAME }}
+    - name: Lambda API call
+      run: |
+        aws lambda update-function-code --function-name lambda_function_name --s3-bucket ${{ secrets.S3_BUCKET_NAME }} --s3-key lambda_artifact.zip --region us-east-1 > lambdaFile.txt  
