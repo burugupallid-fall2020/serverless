@@ -32,7 +32,7 @@ exports.handler = (event, context, callback) => {
             console.log("Successessfully added Data from DynamoDB", data);
             console.log(message.email)
             console.log(message.question_id)
-            let HOST = "http://prod.bdsaisantosh.me/v1/question/" + message.question_id + "/answer/" + message.answer_id
+            let HOST = message.domain + message.question_id + "/answer/" + message.answer_id
             if (message.type == "updated") {
               var params = {
                 Destination: {
@@ -40,7 +40,7 @@ exports.handler = (event, context, callback) => {
                 },
                 Message: {
                   Body: {
-                    Text: { Data: "Answer is  " + HOST + "Updated" },
+                    Text: { Data: "Answer is  " + HOST + " Updated" },
                   },
 
                   Subject: { Data: "Answer Posted for: " + message.question_text },
@@ -68,7 +68,7 @@ exports.handler = (event, context, callback) => {
                 },
                 Message: {
                   Body: {
-                    Text: { Data: "Answer is  " + HOST + "Posted" },
+                    Text: { Data: "Answer is  " + HOST + " Posted" },
                   },
 
                   Subject: { Data: "Answer Posted for: " + message.question_text },

@@ -24,6 +24,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
-        npm install
         sudo apt-get update && sudo apt-get install wget zip unzip -y
 
