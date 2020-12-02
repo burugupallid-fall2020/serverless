@@ -43,7 +43,7 @@ exports.handler = (event, context, callback) => {
                     Text: { Data: "Answer is  " + HOST + " Updated" },
                   },
 
-                  Subject: { Data: "Answer Posted for: " + message.question_text },
+                  Subject: { Data: "Answer Updated for: " + message.question_text },
                 },
                 Source: "noreply@prod.bdsaisantosh.me",
               };
