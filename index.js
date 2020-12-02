@@ -32,7 +32,7 @@ exports.handler = (event, context, callback) => {
             console.log("Successessfully added Data from DynamoDB", data);
             console.log(message.email)
             console.log(message.question_id)
-            let HOST = message.domain + message.question_id + "/answer/" + message.answer_id
+            let HOST = message.domain +'/'+ message.question_id + "/answer/" + message.answer_id
             if (message.type == "updated") {
               var params = {
                 Destination: {
