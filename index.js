@@ -48,6 +48,7 @@ exports.handler = (event, context, callback) => {
                 Source: "noreply@prod.bdsaisantosh.me",
               };
             } else if (message.type == "deleted") {
+              let HOST = message.domain +'/v1/question/'+ message.question_id
               var params = {
                 Destination: {
                   ToAddresses: [message.email],
@@ -57,7 +58,7 @@ exports.handler = (event, context, callback) => {
                     Text: { Data: "Answer is deleted for" + message.question_text },
                   },
 
-                  Subject: { Data: "Answer deleted for: " + message.question_text },
+                  Subject: { Data: "Answer deleted for: " + message.question_text +" "+ HOST },
                 },
                 Source: "noreply@prod.bdsaisantosh.me",
               };
