@@ -55,10 +55,10 @@ exports.handler = (event, context, callback) => {
                 },
                 Message: {
                   Body: {
-                    Text: { Data: "Answer is deleted for" + message.question_text },
+                    Text: { Data: "Answer is deleted for" + message.question_text +" "+ HOST },
                   },
 
-                  Subject: { Data: "Answer deleted for: " + message.question_text +" "+ HOST },
+                  Subject: { Data: "Answer deleted for: " + message.question_text },
                 },
                 Source: "noreply@prod.bdsaisantosh.me",
               };
