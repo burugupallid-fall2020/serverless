@@ -1,7 +1,7 @@
 # serverless
 
 
-![AWS LAMBDA](https://d1.awsstatic.com/product-marketing/Lambda/Diagrams/product-page-diagram_Lambda-HowItWorks.68a0bcacfcf46fccf04b97f16b686ea44494303f.png)
+![AWS LAMBDA](https://d2908q01vomqb2.cloudfront.net/632667547e7cd3e0466547863e1207a8c0c0c549/2017/11/15/Email-Pausing-Diagram-BG.png)
 
 #### CI/CD for Lambda
 
